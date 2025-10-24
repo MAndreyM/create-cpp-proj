@@ -60,14 +60,14 @@ echo -e "${YELLOW}📋 Running tests with different options...${NC}"
 # Тест с подробным выводом
 echo -e "\n${YELLOW}🔍 Detailed test output:${NC}"
 docker-compose run --rm test bash -c "
-    cd build && ./test_runner --success --no-version --no-help
+    cd build && ./tests/test_runner --success --no-version --no-help
 "
 check_success "Detailed tests completed"
 
 # Тест с подсветкой
 echo -e "\n${YELLOW}🎨 Tests with colors:${NC}"
 docker-compose run --rm test bash -c "
-    cd build && ./test_runner --force-colors
+    cd build && ./tests/test_runner --force-colors
 "
 check_success "Colorized tests completed"
 
@@ -78,7 +78,7 @@ docker-compose run --rm test bash -c "
     cd build_release &&
     cmake -G Ninja .. -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=ON &&
     ninja &&
-    ./test_runner --success
+    ./tests/test_runner --success
 "
 check_success "Release build tests passed"
 
@@ -89,7 +89,7 @@ if docker-compose run --rm dev bash -c "command -v clang-tidy >/dev/null 2>&1"; 
         cd build &&
         cmake -G Ninja .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON &&
         ninja &&
-        clang-tidy ../src/*.cpp ../src/*.h -- -I../src
+        clang-tidy ../src/*.cpp ../src/*.hpp -- -I../src
     "
     check_success "Static analysis completed"
 else

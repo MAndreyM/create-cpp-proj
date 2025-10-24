@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   dev:
     build:
@@ -39,7 +37,7 @@ services:
              cd build &&
              cmake -G Ninja .. -DBUILD_TESTS=ON &&
              ninja &&
-             ./test_runner --success"
+             ./tests/test_runner --success"
     volumes:
       - ./tests:/project/tests
 
