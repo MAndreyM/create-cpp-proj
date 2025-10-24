@@ -1,5 +1,5 @@
 # Мульти-стадийный Dockerfile с doctest, Doxygen, Ninja
-FROM registry.red-soft.ru/ubi8/ubi:8.8 as base
+FROM registry.red-soft.ru/ubi8/ubi as base
 
 LABEL maintainer="mam28.andr@yandex.ru"
 LABEL description="C++ Application with doctest, Doxygen, Ninja"
