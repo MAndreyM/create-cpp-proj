@@ -1,0 +1,39 @@
+.PHONY: dev prod test docs format clean build help
+
+help:
+	@echo "Available targets:"
+	@echo "  dev     - Start development environment"
+	@echo "  prod    - Build production image"
+	@echo "  test    - Run tests with doctest"
+	@echo "  docs    - Generate documentation with Doxygen"
+	@echo "  format  - Format code with clang-format"
+	@echo "  build   - Build all targets with Ninja"
+	@echo "  clean   - Clean up"
+
+dev:
+	@./scripts/build-dev.sh
+
+prod:
+	@./scripts/build-prod.sh
+
+test:
+	@./scripts/test.sh
+
+docs:
+	@./scripts/docs.sh
+
+format:
+	@./scripts/format.sh
+
+build:
+	docker-compose run --rm dev bash -c "
+	    mkdir -p build &&
+	    cd build &&
+	    cmake -G Ninja .. &&
+	    ninja
+	"
+
+clean:
+	docker-compose down -v
+	rm -rf build/ docs/output/
+	docker system prune -f
