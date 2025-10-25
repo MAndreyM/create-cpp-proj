@@ -114,3 +114,4 @@ echo -e "   - Run './scripts/docs.sh' to generate documentation"
 echo -e "   - Use 'make dev' for development environment"
 
 echo -e "\n${GREEN}🚀 Ready for production!${NC}"
+

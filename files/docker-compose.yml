@@ -52,3 +52,4 @@ services:
       - ./docs/output:/project/docs/output
     working_dir: /project
     command: ["doxygen", "docs/Doxyfile"]
+

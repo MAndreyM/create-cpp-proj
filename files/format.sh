@@ -5,12 +5,17 @@ set -e
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
+RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 echo -e "${BLUE}🎨 Formatting Code...${NC}"
 
-# Форматирование исходного кода
-docker-compose run --rm dev bash -c "
+# Получаем ID текущего пользователя и группы
+USER_ID=$(id -u)
+GROUP_ID=$(id -g)
+
+# Форматирование исходного кода с сохранением прав
+docker-compose run --rm --user "$USER_ID:$GROUP_ID" dev bash -c "
     echo 'Formatting C++ files...'
     find src/ tests/ -name '*.cpp' -o -name '*.h' | xargs clang-format -i -style=file
 "

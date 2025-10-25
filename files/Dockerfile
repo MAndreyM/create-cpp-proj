@@ -25,9 +25,9 @@ RUN dnf update -y && \
     && dnf clean all
 
 # Устанавливаем doctest (header-only)
-RUN mkdir -p /usr/local/include/doctest && \
-    curl -L https://github.com/doctest/doctest/releases/download/v2.4.11/doctest.h \
-    -o /usr/local/include/doctest/doctest.h
+#RUN mkdir -p /usr/local/include/doctest && \
+#    curl -L https://github.com/doctest/doctest/releases/download/v2.4.11/doctest.h \
+#    -o /usr/local/include/doctest/doctest.h
 
 # Копируем исходный код
 COPY . .
