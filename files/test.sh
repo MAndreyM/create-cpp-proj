@@ -68,7 +68,7 @@ check_success "Detailed tests completed"
 echo -e "\n${YELLOW}🎨 Tests with colors:${NC}"
 docker-compose run --rm test bash -c "
     cd build && ./tests/test_runner --force-colors
-"
+ "
 check_success "Colorized tests completed"
 
 # Проверка сборки в Release режиме

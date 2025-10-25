@@ -39,7 +39,9 @@ services:
              ninja &&
              ./tests/test_runner --success"
     volumes:
+      - ./src:/project/src
       - ./tests:/project/tests
+      - ./build:/project/build
 
   docs:
     build:
