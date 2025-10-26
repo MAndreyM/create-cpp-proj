@@ -54,7 +54,7 @@ if [ $? -eq 0 ]; then
     else
         echo -e "${YELLOW}⚠️  Application may require specific runtime environment${NC}"
         # Альтернативная проверка - просто проверяем что файл существует и исполняемый
-        if docker run --rm --entrypoint /bin/sh $TAG -c "test -x /app/example && echo 'Binary exists and is executable'"; then
+        if docker run --rm --entrypoint /bin/sh $TAG -c "test -x /app/myapp && echo 'Binary exists and is executable'"; then
             echo -e "${GREEN}✅ Binary verification passed${NC}"
         else
             echo -e "${RED}❌ Binary verification failed${NC}"

@@ -2,15 +2,15 @@
 cmake_minimum_required(VERSION 3.15)
 
 # Создаем исполняемый файл
-add_executable(example
+add_executable(myapp
     main.cpp
 )
 
 # Настройки компиляции для C++17
-target_compile_features(example PRIVATE cxx_std_17)
+target_compile_features(myapp PRIVATE cxx_std_17)
 
 # Директории include
-target_include_directories(example 
+target_include_directories(myapp 
     PRIVATE 
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_BINARY_DIR}
@@ -19,7 +19,7 @@ target_include_directories(example
 # Настройки компилятора
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     # Предупреждения
-    target_compile_options(example PRIVATE
+    target_compile_options(myapp PRIVATE
         -Wall
         -Wextra
         -Wpedantic
@@ -29,7 +29,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     )
     
     # Оптимизация для Release
-    target_compile_options(example PRIVATE
+    target_compile_options(myapp PRIVATE
         $<$<CONFIG:Release>:-O3>
         $<$<CONFIG:Debug>:-O0 -g3>
     )
@@ -38,13 +38,13 @@ endif()
 # Настройки специфичные для Ninja
 if(USE_NINJA)
     # Дополнительные опции для ускорения сборки
-    target_compile_options(example PRIVATE
+    target_compile_options(myapp PRIVATE
         -fdiagnostics-color=always  # Цветные предупреждения
     )
 endif()
 
 # Определения для разных конфигураций
-target_compile_definitions(example
+target_compile_definitions(myapp
     PRIVATE
         $<$<CONFIG:Debug>:DEBUG=1>
         $<$<CONFIG:Release>:RELEASE=1 NDEBUG=1>
@@ -52,13 +52,13 @@ target_compile_definitions(example
 
 # Настройки линковки
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-    target_link_options(example PRIVATE
+    target_link_options(myapp PRIVATE
         $<$<CONFIG:Release>:-s>  # Удаление символов в Release
     )
 endif()
 
 # Установка для production развертывания
-install(TARGETS example
+install(TARGETS myapp
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
@@ -66,9 +66,9 @@ install(TARGETS example
 
 # Дополнительная цель для запуска приложения
 add_custom_target(run
-    COMMAND ./example
+    COMMAND ./myapp
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    DEPENDS example
+    DEPENDS myapp
     COMMENT "Running the application"
 )
 
@@ -93,7 +93,7 @@ if(CLANG_TIDY)
     add_custom_target(analyze-src
         COMMAND ${CLANG_TIDY} main.cpp utils.cpp -- -I${CMAKE_CURRENT_SOURCE_DIR}
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        DEPENDS example
+        DEPENDS myapp
         COMMENT "Running static analysis"
     )
 endif()
@@ -109,15 +109,15 @@ if(DOXYGEN_FOUND)
 endif()
 
 # Информация о цели
-get_target_property(MYAPP_TYPE example TYPE)
-get_target_property(MYAPP_SOURCES example SOURCES)
+get_target_property(MYAPP_TYPE myapp TYPE)
+get_target_property(MYAPP_SOURCES myapp SOURCES)
 
-message(STATUS "Configured target 'example'")
+message(STATUS "Configured target 'myapp'")
 message(STATUS "  Type: ${MYAPP_TYPE}")
 message(STATUS "  Sources: ${MYAPP_SOURCES}")
 message(STATUS "  C++ Standard: ${CMAKE_CXX_STANDARD}")
 
 # Экспорт переменных для родительского CMakeLists.txt
-set(MYAPP_TARGET example PARENT_SCOPE)
+set(MYAPP_TARGET myapp PARENT_SCOPE)
 
 

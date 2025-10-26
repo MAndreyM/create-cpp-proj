@@ -64,14 +64,14 @@ FROM base as prod
 RUN dnf update -y && dnf install -y libstdc++ && dnf clean all
 
 WORKDIR /app
-COPY --from=builder /project/build/src/example .
+COPY --from=builder /project/build/src/myapp .
 
 RUN groupadd -r appuser && useradd -r -g appuser appuser && \
-    chown appuser:appuser /app/example
+    chown appuser:appuser /app/myapp
 
 USER appuser
 
-CMD ["./example"]
+CMD ["./myapp"]
 
 # Дополнительная стадия для документации
 FROM base as docs
