@@ -33,10 +33,10 @@ RUN dnf update -y && \
 COPY . .
 
 # Сборка проекта с Ninja
-RUN mkdir -p build && \
-    cd build && \
-    cmake -G Ninja .. -DCMAKE_BUILD_TYPE=Debug && \
-    ninja
+RUN mkdir -p build #&& \
+#    cd build && \
+#    cmake -G Ninja .. -DCMAKE_BUILD_TYPE=Debug && \
+#    ninja
 
 CMD ["/bin/bash"]
 
@@ -44,13 +44,13 @@ CMD ["/bin/bash"]
 FROM base as builder
 
 RUN dnf update -y && \
-    dnf install -y gcc gcc-c++ cmake ninja-build && \
+    dnf install -y gcc gcc-c++ cmake ninja-build git doxygen && \
     dnf clean all
 
 # Устанавливаем doctest для сборки тестов
-RUN mkdir -p /usr/local/include/doctest && \
-    curl -L https://github.com/doctest/doctest/releases/download/v2.4.11/doctest.h \
-    -o /usr/local/include/doctest/doctest.h
+#RUN mkdir -p /usr/local/include/doctest && \
+#    curl -L https://github.com/doctest/doctest/releases/download/v2.4.11/doctest.h \
+#    -o /usr/local/include/doctest/doctest.h
 
 COPY . .
 RUN mkdir -p build && \
@@ -64,7 +64,7 @@ FROM base as prod
 RUN dnf update -y && dnf install -y libstdc++ && dnf clean all
 
 WORKDIR /app
-COPY --from=builder /project/build/myapp .
+COPY --from=builder /project/build/src/myapp .
 
 RUN groupadd -r appuser && useradd -r -g appuser appuser && \
     chown appuser:appuser /app/myapp

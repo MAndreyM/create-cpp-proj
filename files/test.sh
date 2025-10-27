@@ -68,7 +68,7 @@ check_success "Detailed tests completed"
 echo -e "\n${YELLOW}🎨 Tests with colors:${NC}"
 docker-compose run --rm test bash -c "
     cd build && ./tests/test_runner --force-colors
-"
+ "
 check_success "Colorized tests completed"
 
 # Проверка сборки в Release режиме
@@ -89,7 +89,7 @@ if docker-compose run --rm dev bash -c "command -v clang-tidy >/dev/null 2>&1"; 
         cd build &&
         cmake -G Ninja .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON &&
         ninja &&
-        clang-tidy ../src/*.cpp ../src/*.h -- -I../src
+        clang-tidy ../src/*.cpp ../src/*.hpp -- -I../src
     "
     check_success "Static analysis completed"
 else

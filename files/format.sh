@@ -24,8 +24,11 @@ if [ $? -eq 0 ]; then
     echo -e "${GREEN}✅ Code formatted successfully!${NC}"
     
     # Показываем измененные файлы
-    echo -e "${YELLOW}📝 Formatted files:${NC}"
-    git diff --name-only || find src/ tests/ -name '*.cpp' -o -name '*.h'
+    #echo -e "${YELLOW}📝 Formatted files:${NC}"
+    #git diff --name-only || find src/ tests/ -name '*.cpp' -o -name '*.h'
+    # Просто всегда показывать все файлы
+    echo -e "${YELLOW}📝 Source files in project:${NC}"
+    find src/ tests/ -name '*.cpp' -o -name '*.h'
 else
     echo -e "${RED}❌ Code formatting failed${NC}"
     exit 1

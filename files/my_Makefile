@@ -26,14 +26,8 @@ format:
 	@./scripts/format.sh
 
 build:
-	docker-compose run --rm dev bash -c "
-	    mkdir -p build &&
-	    cd build &&
-	    cmake -G Ninja .. &&
-	    ninja
-	"
+	@./scripts/build.sh
 
 clean:
-	docker-compose down -v
-	rm -rf build/ docs/output/
-	docker system prune -f
+	@./scripts/clean.sh
+

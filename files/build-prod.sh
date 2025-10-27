@@ -49,11 +49,16 @@ if [ $? -eq 0 ]; then
     
     # Тестирование запуска
     echo -e "\n${YELLOW}🧪 Testing application startup...${NC}"
-    if docker run --rm --entrypoint /app/myapp $TAG --help 2>/dev/null || \
-       timeout 5s docker run --rm $TAG 2>/dev/null; then
+    if timeout 5s docker run --rm $TAG 2>/dev/null; then
         echo -e "${GREEN}✅ Application starts successfully${NC}"
     else
         echo -e "${YELLOW}⚠️  Application may require specific runtime environment${NC}"
+        # Альтернативная проверка - просто проверяем что файл существует и исполняемый
+        if docker run --rm --entrypoint /bin/sh $TAG -c "test -x /app/myapp && echo 'Binary exists and is executable'"; then
+            echo -e "${GREEN}✅ Binary verification passed${NC}"
+        else
+            echo -e "${RED}❌ Binary verification failed${NC}"
+        fi
     fi
     
     # Создание дополнительного тега latest если это релиз

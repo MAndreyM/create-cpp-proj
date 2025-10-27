@@ -120,3 +120,4 @@ message(STATUS "  C++ Standard: ${CMAKE_CXX_STANDARD}")
 # Экспорт переменных для родительского CMakeLists.txt
 set(MYAPP_TARGET myapp PARENT_SCOPE)
 
+
