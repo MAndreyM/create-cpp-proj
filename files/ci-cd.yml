@@ -119,7 +119,7 @@ jobs:
           echo '✅ Build successful'
           
           echo '5. Running tests...'
-          ./test_runner --success
+          ./tests/test_runner --success
           echo '✅ All tests passed'
         "
 
